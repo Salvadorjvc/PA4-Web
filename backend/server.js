@@ -18,6 +18,7 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: "http://localhost:4200",
+
     methods: ["GET", "POST"]
   }
 });
@@ -101,6 +102,7 @@ io.on('connection', async (socket) => {
 
 // Iniciar servidor
 const PORT = process.env.PORT || 3000;
+
 server.listen(PORT, () => {
   console.log(`Servidor en puerto ${PORT}`);
 });
