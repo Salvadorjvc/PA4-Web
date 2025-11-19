@@ -17,8 +17,9 @@ const server = http.createServer(app);
 // Socket.IO
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:4200",
-
+    origin: ["http://localhost:4200",
+    "https://pa4-web.onrender.com" // frontend en Render
+    ],
     methods: ["GET", "POST"]
   }
 });
@@ -30,8 +31,16 @@ app.use(express.json());
 // Conexión a MongoDB
 // mongoose.connect(process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/restaurante")
 mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log("Conectado a MongoDB"))
-  .catch(err => console.error("Error de conexión:", err));
+  .then(() => {
+    console.log("Conectado a MongoDB");
+
+    server.listen(PORT, () => {
+      console.log(`Servidor en puerto ${PORT}`);
+    });
+  })
+  .catch(err => {
+    console.error("Error de conexión:", err);
+  });
 
 // Usar rutas
 app.use('/api', apiRoutes);
