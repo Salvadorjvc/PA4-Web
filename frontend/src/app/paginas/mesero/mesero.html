@@ -1,0 +1,107 @@
+<div class="container mt-4">
+  <h2 class="mb-4">Panel del Mesero - {{usuario}}</h2>
+
+  <div class="row">
+    <!-- Formulario de Nuevo Pedido -->
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h4>Nuevo Pedido</h4>
+        </div>
+        <div class="card-body">
+          <!-- Selección de Mesa -->
+          <div class="mb-3">
+            <label for="selectMesa" class="form-label"><strong>Seleccionar Mesa:</strong></label>
+            <select id="selectMesa" 
+                    class="form-select" 
+                    [(ngModel)]="mesaSeleccionada"
+                    name="mesa"
+                    aria-label="Seleccionar mesa">
+              <option *ngFor="let mesa of mesas" [value]="mesa">
+                Mesa {{mesa}}
+              </option>
+            </select>
+          </div>
+
+          <!-- Lista de Platos -->
+          <h5 class="mb-3">Seleccionar Platos:</h5>
+          <div class="platos-lista">
+            <div *ngFor="let plato of platosDisponibles" class="card mb-2">
+              <div class="card-body p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong>{{plato.nombre}}</strong>
+                    <span class="text-muted ms-2">S/. {{plato.precio}}</span>
+                  </div>
+                  <div class="input-group" style="width: 120px;">
+                    <button class="btn btn-sm btn-outline-secondary" 
+                            type="button"
+                            (click)="plato.cantidad = plato.cantidad > 0 ? plato.cantidad - 1 : 0">
+                      -
+                    </button>
+                    <input type="number" 
+                           id="cantidad-{{plato.nombre}}"
+                           name="cantidad-{{plato.nombre}}"
+                           class="form-control form-control-sm text-center" 
+                           [(ngModel)]="plato.cantidad"
+                           min="0"
+                           aria-label="Cantidad de {{plato.nombre}}">
+                    <button class="btn btn-sm btn-outline-secondary" 
+                            type="button"
+                            (click)="plato.cantidad = plato.cantidad + 1">
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Total y Botón -->
+          <div class="mt-3 p-3 bg-light rounded">
+            <h5>Total: S/. {{calcularTotal()}}</h5>
+          </div>
+          <button class="btn btn-success w-100 mt-3" 
+                  (click)="enviarPedido()">
+             Enviar Pedido a Cocina
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mis Pedidos Activos -->
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-header bg-info text-white">
+          <h4>Mis Pedidos Activos</h4>
+        </div>
+        <div class="card-body">
+          <div *ngIf="misPedidos.length === 0" class="text-center text-muted py-5">
+            <p>No hay pedidos activos</p>
+          </div>
+
+          <div *ngFor="let pedido of misPedidos" class="card mb-3">
+            <div class="card-header {{obtenerColorEstado(pedido.estado)}} text-white">
+              <div class="d-flex justify-content-between align-items-center">
+                <span><strong>Mesa {{pedido.mesa}}</strong></span>
+                <span class="badge bg-dark">{{pedido.estado}}</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <ul class="list-unstyled mb-0">
+                <li *ngFor="let plato of pedido.platos">
+                  <strong>{{plato.cantidad}}x</strong> {{plato.nombre}}
+                  <span class="text-muted">(S/. {{plato.precio * plato.cantidad}})</span>
+                </li>
+              </ul>
+              <hr>
+              <small class="text-muted">
+                Pedido #{{pedido._id}} - {{pedido.timestamp | date:'short'}}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
