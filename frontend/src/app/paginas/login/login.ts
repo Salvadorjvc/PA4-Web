@@ -27,7 +27,7 @@ export class Login {
       return;
     }
 
-    const backendUrl = 'https://pa4-web.onrender.com'; 
+    const backendUrl = 'https://pa4-web.onrender.com'; // URL del servidor backend
 
     // Llamar al API para autenticar
     this.http.post<any>(`${backendUrl}/api/login`, {

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class SocketService {
   private socket: Socket;
-  private url = 'https://pa4-web.onrender.com';
+  private url = 'https://pa4-web.onrender.com'; // URL del servidor backend
 
   constructor() {
     this.socket = io(this.url);

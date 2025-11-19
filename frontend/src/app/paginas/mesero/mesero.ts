@@ -43,8 +43,8 @@ export class Mesero implements OnInit, OnDestroy {
         this.usuario = JSON.parse(userData).username;
       }
 
-      // Cargar platos desde la base de datos
-      this.http.get<any[]>('https://pa4-web.onrender.com').subscribe({
+      // Cargar platos desde la base de datos ( url del backend )
+      this.http.get<any[]>('https://pa4-web.onrender.com/api/platos').subscribe({
         next: (platos) => {
           this.platosDisponibles = platos.map(plato => ({
             nombre: plato.nombre,
