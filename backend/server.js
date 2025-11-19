@@ -19,7 +19,8 @@ const PORT = process.env.PORT || 3000;
 // Socket.IO
 const allowedOrigins = [
   "http://localhost:4200",            // Tu entorno local
-  "https://pa4-frontend.onrender.com" // FRONTEND EN RENDER
+  //"https://pa4-frontend.onrender.com" // FRONTEND EN RENDER
+  "https://restaurantepa4.netlify.app"  // FRONTEND EN NETLIFY
 ];
 
 // 1. Configuración Socket.IO
