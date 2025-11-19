@@ -30,8 +30,6 @@
             ],
             "scripts": [],
             "outputMode": "static"
-
-            
           },
           "configurations": {
             "production": {
