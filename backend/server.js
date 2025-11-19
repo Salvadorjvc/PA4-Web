@@ -14,18 +14,28 @@ const apiRoutes = require('./routes/apiRoutes');
 const app = express();
 const server = http.createServer(app);
 
+const PORT = process.env.PORT || 3000;
+
 // Socket.IO
+const allowedOrigins = [
+  "http://localhost:4200",            // Tu entorno local
+  "https://pa4-frontend.onrender.com" // FRONTEND EN RENDER
+];
+
+// 1. Configuración Socket.IO
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:4200",
-    "https://pa4-web.onrender.com" // frontend en Render
-    ],
+    origin: allowedOrigins,
     methods: ["GET", "POST"]
   }
 });
 
-// Middlewares
-app.use(cors());
+// 2. Configuración Express
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
+
 app.use(express.json());
 
 // Conexión a MongoDB
@@ -109,9 +119,3 @@ io.on('connection', async (socket) => {
   });
 });
 
-// Iniciar servidor
-const PORT = process.env.PORT || 3000;
-
-server.listen(PORT, () => {
-  console.log(`Servidor en puerto ${PORT}`);
-});

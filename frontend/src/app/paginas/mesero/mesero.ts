@@ -44,7 +44,7 @@ export class Mesero implements OnInit, OnDestroy {
       }
 
       // Cargar platos desde la base de datos
-      this.http.get<any[]>('http://localhost:3000/api/platos').subscribe({
+      this.http.get<any[]>('https://pa4-web.onrender.com').subscribe({
         next: (platos) => {
           this.platosDisponibles = platos.map(plato => ({
             nombre: plato.nombre,
